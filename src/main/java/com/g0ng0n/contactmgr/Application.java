@@ -5,6 +5,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.jaxb.SourceType;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.mapping.MetadataSource;
@@ -35,11 +36,28 @@ public class Application {
                 .withPhone(1231233L)
                 .build();
 
-        save(contact);
-
+        int idSaved = save(contact);
+        System.out.printf("%n%n Before UPDATE %n %n");
+        // Display a list of contacts Before the update
         for(Contact c : fetchAllContacts()){
             System.out.println(c);
         }
+
+        // Get persisted contact
+        Contact c = findContactById(idSaved);
+
+        // update the contact
+        c.setLastName("Gisb");
+
+        // persist the changes
+
+        System.out.printf("%n%n updating.... %n %n");
+        update(c);
+
+        System.out.printf("%n%n UPDATE COMPLETE!! %n %n");
+        // display a list of contacts after the update
+        System.out.printf("%n%n After update %n%n");
+        fetchAllContacts().stream().forEach(System.out::println);
     }
 
     @SuppressWarnings("unchecked")
@@ -58,7 +76,37 @@ public class Application {
         return contacts;
     }
 
-    private static void save (Contact contact){
+    private static Contact findContactById(int id){
+        // Open a session
+        Session session = sessionFactory.openSession();
+        // Retrieve the persistent object (or null if not found)
+        Contact contact = session.get(Contact.class, id);
+
+        // Close a session
+        session.close();
+
+        // Return the object
+        return contact;
+
+    }
+
+    private static void update(Contact contact){
+
+        // Open a session
+        Session session = sessionFactory.openSession();
+
+        // Begin a transaction
+        session.beginTransaction();
+
+        // use the session to update the contact
+        session.update(contact);
+
+        // commit the transaction
+        session.getTransaction().commit();
+        // close the session
+        session.close();
+    }
+    private static int save (Contact contact){
 
         // Open a Session
         Session session = sessionFactory.openSession();
@@ -67,12 +115,14 @@ public class Application {
         session.beginTransaction();
 
         // Use the session to save the contact
-        session.save(contact);
+        int id = (int) session.save(contact);
 
         // Commit the transaction
         session.getTransaction().commit();
 
         // close the session
         session.close();
+
+        return id;
     }
 }
