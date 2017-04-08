@@ -6,6 +6,12 @@
         <!-- SQL dialect -->
         <property name="dialect">org.hibernate.dialect.H2Dialect</property>
 
+
+        <!-- Create the database Schema on startup -->
+        <property name="hbm2ddl.auto">create</property>
+
+        <!-- Names the annotated entity classes -->
+        <mapping class="com.g0ng0n.contactmgr.model.Contact" />
     </session-factory>
 
 </hibernate-configuration>
