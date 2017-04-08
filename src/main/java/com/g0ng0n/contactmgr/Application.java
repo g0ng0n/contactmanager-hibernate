@@ -57,6 +57,7 @@ public class Application {
         session.close();
         return contacts;
     }
+
     private static void save (Contact contact){
 
         // Open a Session
