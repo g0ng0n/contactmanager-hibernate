@@ -8,14 +8,16 @@
 
 
         <!-- Create the database Schema on startup -->
-        <property name="hbm2ddl.auto">create</property>
+        <!-- <property name="hbm2ddl.auto">create</property>-->
+         <property name="hbm2ddl.auto">update</property>
 
-        <!-- Names the annotated entity classes -->
-        <mapping class="com.g0ng0n.contactmgr.model.Contact" />
 
-        <!-- show queries prepared by hibernate -->
+
+         <!-- show queries prepared by hibernate -->
         <property name="show_sql">true</property>
-        
+
+        <!-- Names the annotated entity classes This should be at the end of the session factory after the props -->
+        <mapping class="com.g0ng0n.contactmgr.model.Contact" />
     </session-factory>
 
 </hibernate-configuration>
