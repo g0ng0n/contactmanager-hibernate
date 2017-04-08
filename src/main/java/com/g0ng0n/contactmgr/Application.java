@@ -1,5 +1,6 @@
 package com.g0ng0n.contactmgr;
 
+import com.g0ng0n.contactmgr.model.Contact;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -8,7 +9,7 @@ import org.hibernate.mapping.MetadataSource;
 import org.hibernate.service.ServiceRegistry;
 
 /**
- * Created by gonzalo.gisbert on 07/04/17.
+ * Created by g0ng0n.
  */
 public class Application {
     // holds a reusable reference to aSession Factory (since we need only one)
@@ -24,6 +25,6 @@ public class Application {
 
     public static void main (String[] args){
 
-
+        Contact contact = new Contact.ContactBuilder("Gonzo", "Gono").withEmail("").withPhone(1231233L).build();
     }
 }
