@@ -12,6 +12,10 @@
 
         <!-- Names the annotated entity classes -->
         <mapping class="com.g0ng0n.contactmgr.model.Contact" />
+
+        <!-- show queries prepared by hibernate -->
+        <property name="show_sql">true</property>
+        
     </session-factory>
 
 </hibernate-configuration>
